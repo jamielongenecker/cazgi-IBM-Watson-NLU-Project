@@ -1,5 +1,5 @@
 const express = require('express');
-require('dotenv').config();
+// require('dotenv').config();
 const NaturalLanguageUnderstandingV1 = require('ibm-watson/natural-language-understanding/v1');
 const { IamAuthenticator } = require('ibm-watson/auth');
 const app = new express();
@@ -15,11 +15,11 @@ app.use(cors_app());
 /*Uncomment the following lines to loan the environment 
 variables that you set up in the .env file*/
 
-// const dotenv = require('dotenv');
-// dotenv.config();
+const dotenv = require('dotenv');
+dotenv.config();
 
-// const api_key = process.env.API_KEY;
-// const api_url = process.env.API_URL;
+const api_key = process.env.API_KEY;
+const api_url = process.env.API_URL;
 
 const getNLUInstance = () => {
     /*Type the code to create the NLU instance and return it.
@@ -28,9 +28,9 @@ const getNLUInstance = () => {
     const naturalLanguageUnderstanding = new NaturalLanguageUnderstandingV1({
         version: '2022-03-26',
         authenticator: new IamAuthenticator({
-            apikey: process.env.API_KEY
+            apikey: api_key
         }),
-        serviceUrl: process.env.API_URL
+        serviceUrl: api_url
     });
 
     return naturalLanguageUnderstanding;
