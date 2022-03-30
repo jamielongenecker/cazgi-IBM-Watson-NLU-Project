@@ -13,25 +13,19 @@ app.get("/",(req,res)=>{
   });
 
 app.get("/url/emotion", (req,res) => {
-
      analyzeEmotionUrl(req.query.url,res);
-   // return res.send({"happy":"90","sad":"10"});
 });
 
 app.get("/url/sentiment", (req,res) => {
-  //  return res.send("url sentiment for "+req.query.url);
-   //  analyzeEmotionUrl(req.query.url,res);
     analyzeSentimentUrl(req.query.url,res);
 });
 
 app.get("/text/emotion", (req,res) => {
-   // return res.send({"happy":"10","sad":"90"});
   analyzeEmotionText(req.query.text,res);
 });
 
 app.get("/text/sentiment", (req,res) => {
- //   return res.send("text sentiment for "+req.query.text);
-    analyzeSentimentText(req.query.text,res);
+  analyzeSentimentText(req.query.text,res);
 });
 
 let server = app.listen(8080, () => {
@@ -55,6 +49,7 @@ function getNLUInstance() {
   return naturalLanguageUnderstanding;
 }
 
+// separate function for analyzing emotion of URL
 function analyzeEmotionUrl(url,res){
     const naturalLanguageUnderstanding= getNLUInstance();
     const analyzeParams = {
@@ -67,7 +62,6 @@ function analyzeEmotionUrl(url,res){
     naturalLanguageUnderstanding.analyze(analyzeParams)
       .then(analysisResults => {
         console.log(JSON.stringify(analysisResults, null, 2));
-      // return analysisResults.result.emotion.document.emotion;
       res.send(analysisResults.result.emotion.document.emotion);
       })
       .catch(err => {
@@ -75,7 +69,7 @@ function analyzeEmotionUrl(url,res){
     });
 }
 
-
+// separate function for analyzing emotion of text
 function analyzeEmotionText(sampleText,res){
   const naturalLanguageUnderstanding= getNLUInstance();
   const analyzeParams = {
@@ -88,7 +82,6 @@ function analyzeEmotionText(sampleText,res){
 naturalLanguageUnderstanding.analyze(analyzeParams)
   .then(analysisResults => {
     console.log(JSON.stringify(analysisResults, null, 2));
-   // return analysisResults.result.emotion.document.emotion;
    res.send(analysisResults.result.emotion.document.emotion);
   })
   .catch(err => {
@@ -97,6 +90,7 @@ naturalLanguageUnderstanding.analyze(analyzeParams)
 
 }
 
+// separate function for analyzing sentiment of text
 function analyzeSentimentText(sampleText,res){
     const naturalLanguageUnderstanding= getNLUInstance();
       
@@ -124,6 +118,7 @@ function analyzeSentimentText(sampleText,res){
 
 }
 
+// separate function for analyzing sentiment of URL
 function analyzeSentimentUrl(url,res){
     const naturalLanguageUnderstanding= getNLUInstance();
       
